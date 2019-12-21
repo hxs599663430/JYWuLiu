@@ -1,12 +1,14 @@
 import os
 
 
+DEBUG = True
+
 # 定义密钥
 SECRET_KEY = "HuXianSen_JYWuLiu"
 
 # 数据库设置
 SQLALCHEMY_DATABASE_URI = "mysql://" + os.getenv("DATABASE_USER") + ":" + os.getenv("DATABASE_PASSWORD") \
-                          + "127.0.0.1:3306/wuliu"
+                          + "@127.0.0.1:3306/wuliu?charset=utf8"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # 邮箱设置
