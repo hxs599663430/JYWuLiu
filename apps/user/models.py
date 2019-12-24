@@ -63,3 +63,32 @@ class User(db.Model):
     def check_password(self, raw_password):
         res = check_password_hash(self._password, raw_password)
         return res
+
+    def single_to_dict(self):
+        """
+        查询单个对象的处理
+        :return: json格式数据
+        """
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+    def double_to_dict(self):
+        """
+        查询多个对象的处理
+        :return: json格式数据
+        """
+        result = {}
+        for key in self.__mapper__.c.keys():
+            if getattr(self, key) is not None:
+                result[key] = str(getattr(self, key))
+            else:
+                result[key] = getattr(self, key)
+        return result
+
+
+def to_json(users):
+    res = [user.double_to_dict() for user in users]
+    params = {
+        "code": 200,
+        "data": res
+    }
+    return params
